@@ -8,35 +8,12 @@ import {
   StyleSheet,
 } from 'react-native';
 
-type Producto = {
-  id: string;
-  name: string;
-  done: boolean;
-};
 
 export default function App() {
   const [productos, setProductos] = useState<Producto[]>([]);
   const [text, setText] = useState('');
 
-  const AgregarProductoEnLista = () => {
-    const trimmed = text.trim();
-    if (!trimmed) return;
-    setProductos((prev) => [
-      ...prev,
-      { id: String(Date.now()), name: trimmed, done: false },
-    ]);
-    setText('');
-  };
-
-  const CambiarEstadoDelProducto = (id: string) => {
-    setProductos((prev) =>
-      prev.map((it) => (it.id === id ? { ...it, done: !it.done } : it)),
-    );
-  };
-
-  const EliminarProductoDeLista = (id: string) => { //elimina un producto de la lista
-    setProductos((prev) => prev.filter((it) => it.id !== id));
-  };
+  
 
   const ItemParaListaDeCompra = ({ item }: { item: Producto }) => (
     <Pressable
