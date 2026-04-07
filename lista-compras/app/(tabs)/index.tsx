@@ -8,40 +8,40 @@ import {
   StyleSheet,
 } from 'react-native';
 
-type Item = {
+type Producto = {
   id: string;
   name: string;
   done: boolean;
 };
 
 export default function App() {
-  const [items, setItems] = useState<Item[]>([]);
+  const [productos, setProductos] = useState<Producto[]>([]);
   const [text, setText] = useState('');
 
-  const addItem = () => {
+  const AgregarProductoEnLista = () => {
     const trimmed = text.trim();
     if (!trimmed) return;
-    setItems((prev) => [
+    setProductos((prev) => [
       ...prev,
       { id: String(Date.now()), name: trimmed, done: false },
     ]);
     setText('');
   };
 
-  const toggleItem = (id: string) => {
-    setItems((prev) =>
+  const CambiarEstadoDelProducto = (id: string) => {
+    setProductos((prev) =>
       prev.map((it) => (it.id === id ? { ...it, done: !it.done } : it)),
     );
   };
 
-  const removeItem = (id: string) => {
-    setItems((prev) => prev.filter((it) => it.id !== id));
+  const EliminarProductoDeLista = (id: string) => { //elimina un producto de la lista
+    setProductos((prev) => prev.filter((it) => it.id !== id));
   };
 
-  const renderItem = ({ item }: { item: Item }) => (
+  const ItemParaListaDeCompra = ({ item }: { item: Producto }) => (
     <Pressable
-      onPress={() => toggleItem(item.id)}
-      onLongPress={() => removeItem(item.id)}
+      onPress={() => CambiarEstadoDelProducto(item.id)}
+      onLongPress={() => EliminarProductoDeLista(item.id)}
       style={styles.row}
     >
       <Text style={[styles.rowText, item.done && styles.done]}>
@@ -64,17 +64,17 @@ export default function App() {
           placeholder="Agregar producto (ej: Leche)"
           style={styles.input}
           returnKeyType="done"
-          onSubmitEditing={addItem}
+          onSubmitEditing={AgregarProductoEnLista}
         />
-        <Pressable style={styles.addBtn} onPress={addItem}>
+        <Pressable style={styles.addBtn} onPress={AgregarProductoEnLista}>
           <Text style={styles.addTxt}>Agregar</Text>
         </Pressable>
       </View>
 
       <FlatList
-        data={items}
+        data={productos}
         keyExtractor={(it) => it.id}
-        renderItem={renderItem}
+        renderItem={ItemParaListaDeCompra}
         ListEmptyComponent={
           <Text style={styles.empty}>Sin productos. ¡Agregá el primero! 😊</Text>
         }
