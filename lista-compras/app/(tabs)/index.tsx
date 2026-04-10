@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import {
-  View,
-  Text,
-  TextInput,
-  Pressable,
-  FlatList,
-  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  Pressable,
+  FlatList,
+  StyleSheet,
 } from 'react-native';
 
 type Item = {
@@ -39,8 +39,8 @@ export default function App() {
   };
 
   const renderItem = ({ item }: { item: Item }) => (
-    <Pressable
-      onPress={() => toggleItem(item.id)}
+    <Pressable
+      onPress={() => toggleItem(item.id)}
       onLongPress={() => removeItem(item.id)}
       style={styles.row}
     >
